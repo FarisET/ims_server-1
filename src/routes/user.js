@@ -72,18 +72,23 @@ const router = Router();
 //   });
 
 const User = [
-    { user_id: 24470, user_pass: 'abc123' },
-    { user_id: 20230, user_pass: '123abc' },
+    { "user_id": '24470', "user_pass": 'abc123' },
+    { "user_id": '20230', "user_pass": '123abc' },
   ];
   
   router.post('/login', (req, res) => {
     user_id = req.body.user_id;
     user_pass = req.body.user_pass;  
+    console.log("Received user_id:", user_id);
+    console.log("Received user_pass:", user_pass);
+    console.log("Users:", User);
+
     // Simulate authentication using sample users data
     //const User = User.find((u) => u.user_id === id);
     const user = User.find((u) => u.user_id===user_id);
+    console.log(user);
     if (!user) {
-      return res.status(401).json({ message: 'User not found' });
+      return res.status(401).json({ message: 'User not found omg server connected' });
     }
   
     if (user.user_pass !== user_pass) {
@@ -94,5 +99,6 @@ const User = [
   
     res.status(200).json({ message: 'Login successful', user });
   });
+
   module.exports = router;
 
