@@ -45,10 +45,10 @@ const bodyParser = require('body-parser');
 // router.use(bodyParser.json());
 
 router.post('/login', (req, res) => {
-    const { id, password } = req.body; // Assuming the client sends id and password in the request body
+    const { id, password, role } = req.body; // Assuming the client sends id and password in the request body
   
     // Query the database to find a user with the provided id
-    con.query('SELECT * FROM users WHERE user_id = ?', [id], (error, rows, fields) => {
+    con.query('SELECT * FROM users u join user_role r on u.user_role_id=r.user_role_id WHERE user_id = ? and role_type = ?', [id,role], (error, rows, fields) => {
       if (error) {
         console.log(error);
         return res.status(500).json({ message: 'Internal server error' });
