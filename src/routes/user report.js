@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-var con=require('./database');
+var con=require('../databases/database');
 const { route } = require('express/lib/application');
 const bodyParser = require('body-parser');
 
@@ -15,6 +15,29 @@ router.get('/dashboard/:userid/reports', (req,res) => {
         }
         return res.status(200).json(results);
     });
+});
+
+router.post('/dashboard/:userid/MakeReport', (req,res) => {
+    const report_description=req.body.report_description;
+    const date_time=req.body.date_time;
+    const sub_location_id=req.body.sub_location_id;
+    const incident_subtype_id=req.body.incident_subtype_id;
+    const incident_criticality_id=req.body.incident_criticality_id;
+    const image=req.body.image;
+    const user_id=req.body.user_id;
+
+    // Convert the base64 image to binary data (Buffer)
+    const imageBufferBinaryForm = Buffer.from(image, 'base64');
+
+    const query='insert into user_report(report_description, date_time, sub_location_id, incident_subtype_id, incident_criticality_id, image, user_id) values (?,?,?,?,?,?,?)';
+    const values=[report_description,date_time,sub_location_id,incident_subtype_id,incident_criticality_id,imageBufferBinaryForm,user_id];
+    con.query(query, values, (error,results) => {
+        if(error){
+            console.log(error);
+            return res.status(500).json({message: 'error inserting'});
+        }
+        return res.status(200).json({message: 'report submitted'});
+    })
 });
 
 module.exports = router;

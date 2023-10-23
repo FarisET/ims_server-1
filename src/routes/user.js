@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-var con=require('./database');
+var con=require('../databases/database');
 const { route } = require('express/lib/application');
 const bodyParser = require('body-parser');
 

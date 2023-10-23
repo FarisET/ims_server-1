@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const userRoutes=require('./routes/user');
+const userReportRoutes=require('./routes/user report');
 
 //Use the CORS middleware to allow requests from your Flutter app
 app.use(cors());
@@ -11,8 +13,8 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.json());
 
 // Routes
-app.use(require('./user'));
-app.use(require('./user report'))
+app.use('/user', userRoutes);
+app.use('/user-report', userReportRoutes);
 
 // Starting the server
 app.listen(app.get('port'), () => {
