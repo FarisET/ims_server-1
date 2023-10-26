@@ -51,25 +51,25 @@ router.post('/login', (req, res) => {
     con.query('SELECT * FROM users u join user_role r on u.user_role_id=r.user_role_id WHERE user_id = ? and role_type = ?', [id,role], (error, rows, fields) => {
       if (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ status: 'Internal server error' });
       }
   
       // Check if a user with the provided id exists
       if (rows.length === 0) {
-        return res.status(401).json({ message: 'User not found' });
+        return res.status(401).json({ status: 'User not found' });
       }
   
       const user = rows[0];
   
       // Check if the provided password matches the stored password (you should use a secure hash)
       if (password !== user.password) {
-        return res.status(401).json({ message: 'Invalid password' });
+        return res.status(401).json({ status: 'Invalid password' });
       }
   
       // At this point, the login is successful
       // You may generate a JWT token and return it to the client for future authentication
   
-      return res.status(200).json({ message: 'Login successful', user });
+      return res.status(200).json({ status: 'Login successful', user});
     });
   });
 
