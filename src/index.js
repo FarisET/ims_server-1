@@ -14,7 +14,7 @@ app.use(express.json());
 
 // Routes
 app.use('/user', userRoutes);
-app.use('/user-report', userReportRoutes);
+app.use('/userReport', userReportRoutes);
 
 // Starting the server
 app.listen(app.get('port'), () => {

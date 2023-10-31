@@ -54,7 +54,7 @@ router.get('/dashboard/fetchsublocations', (req,res) => {
             console.log('error in fetching sublocations');
             return res.status(500).json({status: 'Internal Server Error'});
         }
-        return res.status(200).json(results);
+        return res.status(200).json({results: results});
     });
 });
 
@@ -66,7 +66,7 @@ router.get('/dashboard/fetchlocations', (req,res) => {
             console.log('error in fetching locations');
             return res.status(500).json({status: 'Internal Server Error'});
         }
-        return res.status(200).json(results);
+        return res.status(200).json({results: results});
     });
 });
 
