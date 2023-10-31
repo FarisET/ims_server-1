@@ -45,10 +45,9 @@ const bodyParser = require('body-parser');
 // router.use(bodyParser.json());
 
 router.post('/login', (req, res) => {
-    const { id, password, role } = req.body; // Assuming the client sends id and password in the request body
-  
+    const {id, password} = req.body; // Assuming the client sends id and password in the request body  
     // Query the database to find a user with the provided id
-    con.query('SELECT * FROM users u join user_role r on u.user_role_id=r.user_role_id WHERE user_id = ? and role_type = ?', [id,role], (error, rows, fields) => {
+    con.query('SELECT * FROM users u join user_role r on u.role_id=r.role_id WHERE user_id = ? and user_pass=?', [id,password], (error, rows, fields) => {
       if (error) {
         console.log(error);
         return res.status(500).json({ status: 'Internal server error' });
@@ -69,7 +68,7 @@ router.post('/login', (req, res) => {
       // At this point, the login is successful
       // You may generate a JWT token and return it to the client for future authentication
   
-      return res.status(200).json({ status: 'Login successful', user});
+      return res.status(200).json({ status: 'Login successful', user_name:user.user_name, role:user.role_name});
     });
   });
 
